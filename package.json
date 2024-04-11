@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "format": "prettier -w *.json *.mjs *.js lib/*.js spellcheck",
-    "lint": "eslint *.mjs *.js lib/*.js",
+    "format": "prettier -w *.json *.mjs *.js lib/*.js test spellcheck",
+    "lint": "eslint *.mjs *.js lib/*.js test",
+    "test": "node --test",
     "sample": "./spellcheck dictionary.txt README.md"
   },
   "author": "",

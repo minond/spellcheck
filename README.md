@@ -1,5 +1,11 @@
 # Spellchecker
 
+## Usage
+
+```
+./spellcheck <dictionary file path> <file to check>...
+```
+
 ## Getting started
 
 You'll need an LTS version of Node (v18 at this time). Once Node is installed,

@@ -20,19 +20,29 @@
  * - The program handles proper nouns (person or place names, for example) correctly.
  */
 
-const usage = `Usage: ${process.argv[1]} <dictionary file path> <file to check>...`;
+async function main(argv) {
+  const usage = `Usage: ${argv[1]} <dictionary file path> <file to check>...`;
 
-if (process.argv.includes("-h", 2) || process.argv.includes("--help", 2)) {
-  console.log(usage);
-  process.exit(0);
-} else if (process.argv.length <= 3) {
-  console.log("Error: missing argument(s)");
-  console.log("");
-  console.log(usage);
-  process.exit(1);
+  if (argv.includes("-h", 2) || argv.includes("--help", 2)) {
+    console.log(usage);
+    process.exit(0);
+  } else if (argv.length <= 3) {
+    console.log("Error: missing argument(s)\n");
+    console.log(usage);
+    process.exit(1);
+  }
+
+  const { spellcheckFiles } = require(".");
+  const { allFiles } = require("./lib/utils");
+  const [, , dictionaryPath, ...inputPaths] = argv;
+  const validInputs = await allFiles([dictionaryPath, ...inputPaths]);
+  if (!validInputs) {
+    console.log("Error: invalid file(s)\n");
+    console.log(usage);
+    process.exit(1);
+  }
+
+  spellcheckFiles(dictionaryPath, inputPaths);
 }
 
-const { spellcheckFiles } = require(".");
-const [, , dictionaryPath, ...inputPaths] = process.argv;
-
-spellcheckFiles(dictionaryPath, inputPaths);
+main(process.argv);
