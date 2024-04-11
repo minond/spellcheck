@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+
+/* The program should run on the command line like so:
+ *
+ * ```sh
+ * my-cool-spellchecker dictionary.txt file-to-check.txt
+ * # output here
+ * ```
+ *
+ * Write a program that checks spelling. The input to the program is a
+ * dictionary file containing a list of valid words and a file containing the
+ * text to be checked.
+ *
+ * Your program should support the following features (time permitting):
+ *
+ * - The program outputs a list of incorrectly spelled words.
+ * - For each misspelled word, the program outputs a list of suggested words.
+ * - The program includes the line and column number of the misspelled word
+ * - The program prints the misspelled word along with some surrounding context.
+ * - The program handles proper nouns (person or place names, for example) correctly.
+ */
+
+const usage = `Usage: ${process.argv[1]} <dictionary file path> <file to check>...`;
+
+if (process.argv.includes("-h", 2) || process.argv.includes("--help", 2)) {
+  console.log(usage);
+  process.exit(0);
+} else if (process.argv.length <= 3) {
+  console.log("Error: missing argument(s)");
+  console.log("");
+  console.log(usage);
+  process.exit(1);
+}
+
+const { spellcheckFiles } = require(".");
+const [, , dictionaryPath, ...inputPaths] = process.argv;
+
+spellcheckFiles(dictionaryPath, inputPaths);
